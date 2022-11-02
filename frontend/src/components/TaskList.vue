@@ -26,7 +26,14 @@ function OnTaskDelete(taskId) {
 
 <template>
     <div>
-        <TaskCard v-for="task in tasks" :key="task.id" :id="task.id" :name="task.name" :completed="task.completed"
-            @rename="OnTaskRename" @delete="OnTaskDelete" @toggle-completness="OnTaskToggle"></TaskCard>
+        <TaskCard class="task-card-with-spaces" v-for="task in tasks" :key="task.id" :id="task.id" :name="task.name"
+            :completed="task.completed" @rename="OnTaskRename" @delete="OnTaskDelete"
+            @toggle-completness="OnTaskToggle"></TaskCard>
     </div>
 </template>
+
+<style lang="scss">
+.task-card-with-spaces {
+    margin: 15px 0px 15px 0px;
+}
+</style>
