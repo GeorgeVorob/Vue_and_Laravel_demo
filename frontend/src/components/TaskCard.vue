@@ -3,7 +3,7 @@ import { ref } from 'vue'
 
 const props = defineProps({
     id: Number,
-    name: String,
+    desc: String,
     completed: Boolean
 });
 
@@ -11,7 +11,7 @@ const emits = defineEmits(['toggle-completness', 'delete', 'rename']);
 
 
 const isEditing = ref(false);
-const renamingString = ref(props.name);
+const renamingString = ref(props.desc);
 
 function OnCardSave() {
     isEditing.value = false;
@@ -26,7 +26,7 @@ function OnCardSave() {
         </div>
 
         <div v-if="!isEditing">
-            <p class="card-text">{{ props.name }}</p>
+            <p class="card-text">{{ props.desc }}</p>
             <div class="buttons-container">
                 <button class="btn btn-warning" @click="isEditing = true">Изменить</button>
                 <button class="btn btn-outline-danger" @click="$emit('delete', props.id)">Удалить</button>

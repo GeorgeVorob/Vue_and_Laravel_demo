@@ -1,13 +1,19 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import TaskCard from "./TaskCard.vue"
+import { ApiService } from '../Services/ApiService';
 
-const tasks = ref([
-    { id: 1, name: 'task1', completed: false },
-    { id: 2, name: 'task2', completed: false },
-    { id: 3, name: 'task3', completed: true },
-    { id: 4, name: 'task4', completed: false },
-]);
+const tasks = ref([]);
+
+onMounted(() => {
+    ApiService.GetTasks()
+        .then((res) => {
+            return res.json();
+        })
+        .then((json) => {
+            tasks.value = json;
+        });
+});
 
 function OnTaskToggle(taskId) {
     let taskToToggle = tasks.value.find(t => t.id === taskId);
@@ -16,7 +22,7 @@ function OnTaskToggle(taskId) {
 
 function OnTaskRename(taskId, newName) {
     let taskToRename = tasks.value.find(t => t.id === taskId);
-    taskToRename.name = newName;
+    taskToRename.desc = newName;
 }
 
 function OnTaskDelete(taskId) {
@@ -26,7 +32,7 @@ function OnTaskDelete(taskId) {
 
 <template>
     <div>
-        <TaskCard class="task-card-with-spaces" v-for="task in tasks" :key="task.id" :id="task.id" :name="task.name"
+        <TaskCard class="task-card-with-spaces" v-for="task in tasks" :key="task.id" :id="task.id" :desc="task.desc"
             :completed="task.completed" @rename="OnTaskRename" @delete="OnTaskDelete"
             @toggle-completness="OnTaskToggle"></TaskCard>
     </div>
