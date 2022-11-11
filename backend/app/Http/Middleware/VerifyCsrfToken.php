@@ -11,7 +11,8 @@ class VerifyCsrfToken extends Middleware
      *
      * @var array<int, string>
      */
+    //TODO: Вернуть авторизацию, когда появятся пользователи
     protected $except = [
-        //
+        '*'
     ];
 }
